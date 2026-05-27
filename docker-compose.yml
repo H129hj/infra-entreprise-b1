@@ -109,6 +109,59 @@ services:
     networks:
       lan_data:
 
+  # === BONUS : Annuaire LDAP + partage de fichiers Samba ===============
+
+  # --- Annuaire central (OpenLDAP) -------------------------------------
+  ldap:
+    image: osixia/openldap:1.5.0
+    container_name: infra-ldap
+    restart: unless-stopped
+    command: ["--copy-service"]
+    environment:
+      LDAP_ORGANISATION: "Entreprise"
+      LDAP_DOMAIN: "entreprise.local"
+      LDAP_ADMIN_PASSWORD: "admin_ldap_2026"
+    volumes:
+      - ./bonus/ldap:/container/service/slapd/assets/config/bootstrap/ldif/custom:ro
+      - ldap_data:/var/lib/ldap
+      - ldap_conf:/etc/ldap/slapd.d
+    networks:
+      lan_tech:
+        ipv4_address: 172.30.10.60
+
+  # --- Interface web de gestion de l'annuaire --------------------------
+  ldap-admin:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: infra-ldap-admin
+    restart: unless-stopped
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "ldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "18389:80"
+    networks:
+      lan_tech:
+    depends_on: [ldap]
+
+  # --- Serveur de fichiers (Samba) : partage interne, NON expose ------
+  samba:
+    image: dperson/samba
+    container_name: infra-samba
+    restart: unless-stopped
+    command: >
+      -u "hugo;hugo_pass_2026"
+      -u "shakil;shakil_pass_2026"
+      -u "alice;alice_pass_2026"
+      -s "partage-entreprise;/share;yes;no;no;hugo,shakil,alice"
+      -s "technique;/share/technique;yes;no;no;hugo,shakil"
+      -p
+    volumes:
+      - samba_share:/share
+    networks:
+      lan_tech:
+        ipv4_address: 172.30.10.70
+    # NB : pas de 'ports:' -> partage joignable uniquement en interne / via VPN
+
 networks:
   dmz:
     driver: bridge
@@ -126,3 +179,6 @@ volumes:
   wp_files:
   db_data:
   backup_storage:
+  ldap_data:
+  ldap_conf:
+  samba_share:

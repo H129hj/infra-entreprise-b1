@@ -1,0 +1,51 @@
+# Annuaire LDAP de l'entreprise (base dc=entreprise,dc=local)
+# Cree les unites d'organisation et quelques utilisateurs.
+
+dn: ou=people,dc=entreprise,dc=local
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=entreprise,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: cn=technique,ou=groups,dc=entreprise,dc=local
+objectClass: posixGroup
+cn: technique
+gidNumber: 10001
+
+dn: uid=hugo,ou=people,dc=entreprise,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: hugo
+cn: Hugo Berton
+sn: Berton
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/hugo
+loginShell: /bin/bash
+userPassword: hugo_pass_2026
+
+dn: uid=shakil,ou=people,dc=entreprise,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: shakil
+cn: Shakil Khaldi
+sn: Khaldi
+uidNumber: 10002
+gidNumber: 10001
+homeDirectory: /home/shakil
+loginShell: /bin/bash
+userPassword: shakil_pass_2026
+
+dn: uid=alice,ou=people,dc=entreprise,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: alice
+cn: Alice Martin
+sn: Martin
+uidNumber: 10003
+gidNumber: 10001
+homeDirectory: /home/alice
+loginShell: /bin/bash
+userPassword: alice_pass_2026
