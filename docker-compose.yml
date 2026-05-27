@@ -129,20 +129,6 @@ services:
       lan_tech:
         ipv4_address: 172.30.10.60
 
-  # --- Interface web de gestion de l'annuaire --------------------------
-  ldap-admin:
-    image: osixia/phpldapadmin:0.9.0
-    container_name: infra-ldap-admin
-    restart: unless-stopped
-    environment:
-      PHPLDAPADMIN_LDAP_HOSTS: "ldap"
-      PHPLDAPADMIN_HTTPS: "false"
-    ports:
-      - "18389:80"
-    networks:
-      lan_tech:
-    depends_on: [ldap]
-
   # --- Serveur de fichiers (Samba) : partage interne, NON expose ------
   samba:
     image: dperson/samba
