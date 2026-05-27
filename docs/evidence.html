@@ -63,4 +63,25 @@ restauration : docker exec infra-backup /restore.sh /backups/db_&lt;TS&gt;.sql.g
 intranet-app        traefik/whoami                  <span class="ok">Up</span>   (aucun port publié — joignable seulement via le tunnel à <span class="p">10.13.13.1:80</span>)
 Peers générés : hugo (10.13.13.2), shakil (10.13.13.3) — clé + PresharedKey (auth forte)</pre></div>
 
+<h2>5. BONUS — Annuaire LDAP + partage de fichiers Samba</h2>
+<div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker logs infra-ldap  &  infra-samba</span></div>
+<pre><span class="c"># OpenLDAP (annuaire central, base dc=entreprise,dc=local)</span>
+Add bootstrap schemas...
+Add image bootstrap ldif...
+<span class="ok">Add custom bootstrap ldif...</span>   -> OU people/groups + utilisateurs hugo, shakil, alice
+slapd starting   (389/tcp, 636/tcp — interne uniquement)
+
+<span class="c"># Samba (serveur de fichiers, partages : partage-entreprise + technique)</span>
+<span class="ok">Added user hugo.</span>
+<span class="ok">Added user shakil.</span>
+<span class="ok">Added user alice.</span>
+smbd version 4.12.2 started.
+daemon_ready: smbd finished starting up and ready to serve connections
+<span class="c"># non exposé publiquement -> accès via le réseau interne / VPN</span></pre></div>
+
+<h2>6. Stack complète — 9 conteneurs actifs</h2>
+<div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker compose ps</span></div>
+<pre>reverse-proxy <span class="ok">Up</span>  wordpress <span class="ok">Up</span>  nodeapp <span class="ok">Up</span>  db <span class="ok">Up</span>  dns <span class="ok">Up</span>
+router-fw <span class="ok">Up</span>  backup <span class="ok">Up</span>  ldap <span class="ok">Up</span>  samba <span class="ok">Up (healthy)</span></pre></div>
+
 </body></html>

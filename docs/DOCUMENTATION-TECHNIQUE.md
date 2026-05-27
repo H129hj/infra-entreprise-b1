@@ -104,6 +104,24 @@ docker exec infra-backup ls -lh /backups           # inventaire
 docker exec infra-backup /restore.sh /backups/db_<TS>.sql.gz   # restauration
 ```
 
+## 7bis. Bonus — Annuaire LDAP + partage de fichiers Samba
+
+- **Annuaire central** : `ldap` (OpenLDAP, base `dc=entreprise,dc=local`). Les unités
+  d'organisation (`people`, `groups`) et les utilisateurs (hugo, shakil, alice) sont
+  créés au démarrage via `bonus/ldap/bootstrap.ldif`. Service interne (389/636, non exposé).
+- **Serveur de fichiers** : `samba` (Samba), partages `partage-entreprise` et `technique`,
+  utilisateurs gérés et journalisation des accès (`docker logs infra-samba`).
+  Non exposé publiquement → accès via le réseau interne ou le VPN.
+- **Gestion des utilisateurs** :
+```bash
+docker logs infra-ldap        # import des comptes (custom ldif)
+docker exec infra-ldap ldapsearch -x -b dc=entreprise,dc=local "(objectClass=inetOrgPerson)"
+docker logs infra-samba       # comptes Samba + accès (logs)
+```
+- Accès au partage depuis un poste (via VPN) : `smb://<hôte>/partage-entreprise`
+  (Finder macOS : Aller → Se connecter au serveur).
+- *Piste d'amélioration : authentification Samba directement adossée à LDAP (back-end ldapsam).*
+
 ## 8. Sécurité
 
 - **Cloisonnement réseau** : 3 zones, LAN data sans accès Internet (`internal`).

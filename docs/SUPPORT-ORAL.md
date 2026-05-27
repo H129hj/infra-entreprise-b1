@@ -36,6 +36,11 @@ accès distant sécurisé aux ressources internes.
 - Activer le tunnel WireGuard sur le poste, ouvrir `http://10.13.13.1` (ressource interne).
 - Couper le VPN → la ressource devient injoignable. Authentification : clé + PSK par utilisateur.
 
+### 6bis. Bonus — Annuaire LDAP + partage Samba (1 min) — *si le temps le permet*
+- Annuaire OpenLDAP `dc=entreprise,dc=local` : utilisateurs hugo/shakil/alice (gestion centralisée).
+- Partage de fichiers Samba (`partage-entreprise`, `technique`) accessible via le réseau interne / VPN.
+- Montrer `docker logs infra-ldap` (import des comptes) et un montage `smb://` depuis le poste.
+
 ### 7. Bilan & ouverture (1 min)
 - Ce qui marche, sécurité, et pistes : load balancing, Let's Encrypt (domaine réel),
   annuaire LDAP + partage Samba (bonus), monitoring.
