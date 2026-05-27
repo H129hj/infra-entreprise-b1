@@ -99,8 +99,8 @@ services:
     restart: unless-stopped
     environment:
       DB_HOST: db
-      DB_USER: root
-      DB_PASS: root_pass_2026
+      DB_USER: wp
+      DB_PASS: wp_pass_2026
       DB_NAME: wordpress
       BACKUP_CRON: "*/30 * * * *"   # toutes les 30 min (demo)
     volumes:
