@@ -1,0 +1,128 @@
+# =====================================================================
+# Projet B1 INFRA - Infrastructure d'entreprise securisee (SUJET FINAL)
+# Groupe 3 - Hugo BERTON & Shakil KHALDI
+# Etape 1 : segmentation reseau + routeur/firewall + DNS/DHCP
+# Etape 2 : serveur web multi-applications (WordPress + Node) + reverse proxy TLS
+# Etape 3 : sauvegarde automatisee (service backup -> stockage isole)
+# =====================================================================
+services:
+
+  # --- Reverse proxy + TLS (DMZ) : point d'entree unique HTTPS ---------
+  reverse-proxy:
+    image: caddy:2-alpine
+    container_name: infra-reverse-proxy
+    restart: unless-stopped
+    ports:
+      - "18080:80"     # ports hauts pour ne pas entrer en conflit avec la prod
+      - "18443:443"
+    volumes:
+      - ./reverse-proxy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    networks:
+      dmz:
+      lan_tech:
+        ipv4_address: 172.30.10.10
+    depends_on: [wordpress, nodeapp]
+
+  # --- Application 1 : WordPress (PHP) ---------------------------------
+  wordpress:
+    image: wordpress:6-php8.2-apache
+    container_name: infra-wordpress
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp_pass_2026
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_files:/var/www/html
+    networks:
+      lan_tech:
+        ipv4_address: 172.30.10.20
+      lan_data:
+
+  # --- Application 2 : service Node.js ---------------------------------
+  nodeapp:
+    build: ./nodeapp
+    container_name: infra-nodeapp
+    restart: unless-stopped
+    networks:
+      lan_tech:
+        ipv4_address: 172.30.10.30
+
+  # --- Base de donnees (zone data isolee) ------------------------------
+  db:
+    image: mariadb:11
+    container_name: infra-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wp
+      MARIADB_PASSWORD: wp_pass_2026
+      MARIADB_ROOT_PASSWORD: root_pass_2026
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      lan_data:
+        ipv4_address: 172.30.20.10
+
+  # --- DNS / DHCP interne (zone entreprise.local) ----------------------
+  dns:
+    image: dockurr/dnsmasq
+    container_name: infra-dns
+    restart: unless-stopped
+    cap_add: [NET_ADMIN]
+    volumes:
+      - ./network/dnsmasq.conf:/etc/dnsmasq.conf:ro
+    networks:
+      lan_tech:
+        ipv4_address: 172.30.10.53
+
+  # --- Routeur / pare-feu de demonstration (inter-segments) ------------
+  router-fw:
+    image: alpine:3.20
+    container_name: infra-router-fw
+    restart: unless-stopped
+    cap_add: [NET_ADMIN]
+    command: ["sh", "/firewall/router-fw.sh"]
+    volumes:
+      - ./network/router-fw.sh:/firewall/router-fw.sh:ro
+    networks:
+      dmz:
+      lan_tech:
+      lan_data:
+
+  # --- Sauvegarde automatisee (Etape 3) --------------------------------
+  backup:
+    build: ./backup
+    container_name: infra-backup
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: root_pass_2026
+      DB_NAME: wordpress
+      BACKUP_CRON: "*/30 * * * *"   # toutes les 30 min (demo)
+    volumes:
+      - backup_storage:/backups      # stockage isole dedie
+      - wp_files:/data/wp_files:ro
+    networks:
+      lan_data:
+
+networks:
+  dmz:
+    driver: bridge
+    ipam: { config: [{ subnet: 172.30.0.0/24 }] }
+  lan_tech:
+    driver: bridge
+    ipam: { config: [{ subnet: 172.30.10.0/24 }] }
+  lan_data:
+    driver: bridge
+    internal: true        # zone data isolee : pas d'acces Internet sortant
+    ipam: { config: [{ subnet: 172.30.20.0/24 }] }
+
+volumes:
+  caddy_data:
+  wp_files:
+  db_data:
+  backup_storage:

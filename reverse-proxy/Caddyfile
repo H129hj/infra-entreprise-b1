@@ -1,0 +1,24 @@
+# Reverse proxy Caddy - TLS interne (certificats auto-signes via CA locale Caddy)
+# Deux sous-domaines distincts routes vers deux applications differentes.
+{
+	auto_https disable_redirects
+	local_certs
+}
+
+# Application 1 : WordPress
+wordpress.entreprise.local {
+	tls internal
+	reverse_proxy wordpress:80
+}
+
+# Application 2 : service Node.js
+app.entreprise.local {
+	tls internal
+	reverse_proxy nodeapp:3000
+}
+
+# Acces direct par IP (fallback demo) -> page d'accueil
+:80, :443 {
+	tls internal
+	respond "Infra Entreprise - reverse proxy OK. Utilisez wordpress.entreprise.local ou app.entreprise.local" 200
+}
