@@ -1,0 +1,66 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<style>
+  body{margin:0;background:#0d1117;font-family:'SF Mono',ui-monospace,Menlo,monospace;color:#c9d1d9}
+  .term{max-width:1100px;margin:16px auto;background:#161b22;border:1px solid #30363d;border-radius:10px;overflow:hidden;box-shadow:0 8px 30px #0008}
+  .bar{background:#21262d;padding:8px 12px;display:flex;gap:8px;align-items:center;border-bottom:1px solid #30363d}
+  .dot{width:12px;height:12px;border-radius:50%}.r{background:#ff5f56}.y{background:#ffbd2e}.g{background:#27c93f}
+  .title{margin-left:10px;color:#8b949e;font-size:13px}
+  pre{margin:0;padding:14px 18px;font-size:12.5px;line-height:1.5;white-space:pre-wrap}
+  .p{color:#58a6ff}.ok{color:#3fb950}.k{color:#d29922}.c{color:#8b949e}
+  h2{max-width:1100px;margin:24px auto 4px;color:#e6edf3;font:600 15px system-ui}
+</style></head><body>
+
+<h2>1. Étape 1 — Réseau segmenté : routeur / pare-feu nftables (multi-zones)</h2>
+<div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker logs infra-router-fw</span></div>
+<pre><span class="c">=== Interfaces / adresses du routeur ===</span>
+eth0@if294   UP   <span class="p">172.30.0.2/24</span>     (DMZ)
+eth1@if300   UP   <span class="p">172.30.20.4/24</span>    (LAN data)
+eth2@if301   UP   <span class="p">172.30.10.2/24</span>    (LAN technique)
+<span class="c">=== Politique de filtrage inter-zones (nftables) ===</span>
+table inet zones {
+  chain forward {
+    type filter hook forward priority filter; <span class="k">policy drop;</span>
+    ct state established,related accept
+    iifname "eth1" oifname "eth0" accept
+    iifname "eth2" oifname "eth0" drop
+  }
+}
+<span class="c">=== Tests de joignabilité depuis le routeur ===</span>
+reverse-proxy (172.30.10.10): <span class="ok">OK</span>
+db (172.30.20.10)          : <span class="ok">OK</span></pre></div>
+
+<h2>2. Étape 2 — Serveur web multi-applications : 7 conteneurs actifs</h2>
+<div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker compose ps</span></div>
+<pre>NAME                  IMAGE                       SERVICE         STATUS        PORTS
+infra-reverse-proxy   caddy:2-alpine              reverse-proxy   <span class="ok">Up</span>   0.0.0.0:18080->80, 0.0.0.0:18443->443
+infra-wordpress       wordpress:6-php8.2-apache   wordpress       <span class="ok">Up</span>   80/tcp
+infra-nodeapp         infra-...-nodeapp           nodeapp         <span class="ok">Up</span>   3000/tcp
+infra-db              mariadb:11                  db              <span class="ok">Up</span>   3306/tcp
+infra-dns             dockurr/dnsmasq             dns             <span class="ok">Up</span>   53/udp 53/tcp 67/udp
+infra-router-fw       alpine:3.20                 router-fw       <span class="ok">Up</span>
+infra-backup          infra-...-backup            backup          <span class="ok">Up</span></pre></div>
+
+<div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">curl — reverse proxy TLS + sous-domaines distincts</span></div>
+<pre><span class="p">$</span> curl -k --resolve wordpress.entreprise.local:18443:144.91.126.51 https://wordpress.entreprise.local:18443/
+<span class="ok">HTTP 200</span>  &lt;title&gt;Entreprise Demo – Infra B1&lt;/title&gt;
+<span class="p">$</span> curl -k --resolve app.entreprise.local:18443:144.91.126.51 https://app.entreprise.local:18443/
+<span class="ok">HTTP 200</span>  &lt;h1&gt;Application Node.js&lt;/h1&gt;  (servie sur app.entreprise.local)</pre></div>
+
+<h2>3. Étape 3 — Sauvegarde automatisée (cron) vers stockage isolé</h2>
+<div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker logs infra-backup</span></div>
+<pre>Service de sauvegarde demarre. Planification : <span class="k">*/30 * * * *</span>
+[2026-05-27 15:26:36] Debut sauvegarde
+  - base sauvegardee : <span class="ok">db_2026-05-27_152636.sql.gz</span>
+  - fichiers sauvegardes : <span class="ok">wpfiles_2026-05-27_152636.tar.gz</span>
+[2026-05-27 15:26:50] Sauvegarde terminee. Contenu du stockage :
+-rw-r--r-- 1 root root  <span class="p">18.9K</span> db_2026-05-27_152636.sql.gz      (base WordPress complète)
+-rw-r--r-- 1 root root  <span class="p">25.9M</span> wpfiles_2026-05-27_152636.tar.gz (fichiers du site)
+restauration : docker exec infra-backup /restore.sh /backups/db_&lt;TS&gt;.sql.gz</pre></div>
+
+<h2>4. Sécurité — Accès distant VPN WireGuard</h2>
+<div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker ps — wg-infra + ressource interne VPN-only</span></div>
+<pre>infra wg-infra      lscr.io/linuxserver/wireguard   <span class="ok">Up</span>   0.0.0.0:<span class="p">51820->51820/udp</span>
+intranet-app        traefik/whoami                  <span class="ok">Up</span>   (aucun port publié — joignable seulement via le tunnel à <span class="p">10.13.13.1:80</span>)
+Peers générés : hugo (10.13.13.2), shakil (10.13.13.3) — clé + PresharedKey (auth forte)</pre></div>
+
+</body></html>
