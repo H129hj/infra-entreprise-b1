@@ -1,0 +1,290 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Glossaire & Questions/Réponses — B1 INFRA</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+  body { font: 11pt/1.5 -apple-system, "Helvetica Neue", Arial, sans-serif; color: #1a1f2c; }
+  h1 { font-size: 22pt; margin: 0 0 4px; color: #0f3460; letter-spacing: -.3px }
+  .sub { color: #5a6479; font-size: 10pt; margin-bottom: 18px }
+  h2 { font-size: 14pt; margin: 22px 0 6px; color: #0f3460; border-bottom: 2px solid #0f3460; padding-bottom: 4px }
+  h3 { font-size: 12.5pt; margin: 14px 0 6px; color: #1a1f2c }
+  dl { margin: 6px 0 12px }
+  dt { font-weight: 700; color: #0f3460; margin-top: 8px }
+  dd { margin: 2px 0 6px 0; padding-left: 0 }
+  .qa { border: 1px solid #d8dde6; border-radius: 8px; padding: 10px 14px; margin: 10px 0; page-break-inside: avoid }
+  .qa .q { font-weight: 700; color: #0f3460; margin-bottom: 4px }
+  .qa .q::before { content: "❓  " }
+  .qa .a { margin-top: 4px }
+  .qa .a::before { content: "✅  "; color: #1e7c4e }
+  .lvl { display:inline-block; background:#eef3fb; color:#0f3460; font-size:9pt; padding:1px 8px; border-radius: 999px; margin-left: 6px }
+  .lvl.hard { background:#fff1f0; color:#a3262c }
+  .lvl.med { background:#fff7e6; color:#7a4d12 }
+  code { font: 10pt "SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace; background: #f3f6fb; padding: 1px 5px; border-radius: 4px }
+  .twocol { column-count: 2; column-gap: 18px }
+  .twocol dt { break-after: avoid }
+  .pb { page-break-after: always }
+  .legend { background:#f3f6fb; border-left: 4px solid #0f3460; padding: 8px 12px; margin: 8px 0 16px; font-size: 10pt }
+  ul { margin: 4px 0 8px 18px } li { margin: 1px 0 }
+</style></head>
+<body>
+
+<h1>Glossaire &amp; Q/R d'oral</h1>
+<div class="sub">B1 INFRA — Groupe 3 · Document de révision interne au trinôme</div>
+
+<div class="legend">
+  Document à <b>lire avant l'oral</b>. Le glossaire reprend, en langage simple,
+  tous les termes techniques mentionnés dans le projet. Les Q/R sont des
+  questions probables du jury, avec une réponse <b>courte</b> à donner d'abord,
+  puis un <b>développement</b> si on creuse. Les badges indiquent la difficulté
+  de la question : <span class="lvl">facile</span> · <span class="lvl med">moyenne</span> · <span class="lvl hard">piège</span>.
+</div>
+
+<h2>1. Glossaire — Réseau</h2>
+<dl class="twocol">
+  <dt>Adresse IP</dt><dd>Identifiant numérique d'une machine sur un réseau (ex. <code>172.30.10.20</code>).</dd>
+  <dt>Sous-réseau / CIDR</dt><dd>Une plage d'IP définie par un préfixe. <code>172.30.10.0/24</code> = 256 adresses, dont 254 utilisables.</dd>
+  <dt>Plan d'adressage</dt><dd>Document qui décrit qui prend quelle plage IP dans le réseau.</dd>
+  <dt>Routage</dt><dd>Décider, pour chaque paquet, par quelle interface l'envoyer.</dd>
+  <dt>Commutation</dt><dd>Aiguillage de trames Ethernet sur un switch, niveau 2 OSI.</dd>
+  <dt>VLAN</dt><dd>Réseau local <b>virtuel</b> : on découpe un même câble physique en plusieurs réseaux logiques. Niveau 2 OSI.</dd>
+  <dt>Segmentation réseau</dt><dd>Couper l'infra en zones isolées (RH, compta, technique, DMZ…) pour limiter ce qui se parle à quoi.</dd>
+  <dt>DMZ</dt><dd>Zone démilitarisée : la « façade » accessible depuis Internet (proxy, serveur web public). Tout ce qui est sensible est <b>derrière</b>.</dd>
+  <dt>DHCP</dt><dd>Service qui distribue automatiquement les IP aux machines qui arrivent sur le réseau.</dd>
+  <dt>DNS</dt><dd>Service qui traduit un nom (<code>app.entreprise.local</code>) en IP. On a un DNS <b>interne</b> via dnsmasq pour notre zone.</dd>
+  <dt>Pare-feu</dt><dd>Filtre les paquets selon des règles (autoriser, refuser, journaliser).</dd>
+  <dt>nftables</dt><dd>Outil moderne de pare-feu sur Linux (remplace iptables). On l'utilise dans notre conteneur routeur.</dd>
+  <dt>iptables</dt><dd>L'ancienne génération de l'outil de pare-feu Linux. Caddy et Docker en posent automatiquement.</dd>
+  <dt>NAT / MASQUERADE</dt><dd>Translation d'adresses : on cache des IP privées derrière une IP publique. WireGuard et Docker en font.</dd>
+  <dt>WAN / LAN</dt><dd>WAN = grand réseau (Internet). LAN = réseau local.</dd>
+  <dt>OSI / TCP-IP</dt><dd>Modèles en couches. On parle souvent de la couche 2 (Ethernet/MAC), 3 (IP), 4 (TCP/UDP), 7 (HTTP, DNS…).</dd>
+</dl>
+
+<h2>2. Glossaire — Web</h2>
+<dl class="twocol">
+  <dt>HTTP</dt><dd>Protocole web en clair, port 80 par défaut.</dd>
+  <dt>HTTPS</dt><dd>HTTP + chiffrement TLS, port 443 par défaut. Authentifie le serveur et chiffre l'échange.</dd>
+  <dt>TLS</dt><dd>Le mécanisme cryptographique qui sécurise HTTPS (anciennement SSL).</dd>
+  <dt>Certificat TLS</dt><dd>Pièce d'identité numérique du serveur, signée par une autorité (CA).</dd>
+  <dt>CA (autorité de certification)</dt><dd>L'entité qui signe les certificats. <b>CA interne</b> = on génère la nôtre (auto-signée). <b>Let's Encrypt</b> = CA publique gratuite.</dd>
+  <dt>SNI</dt><dd>« Server Name Indication » : le navigateur dit au serveur, dès le début du TLS, le nom qu'il cherche, ce qui permet de servir plusieurs sites HTTPS sur la même IP/port.</dd>
+  <dt>Reverse proxy</dt><dd>Serveur qui reçoit les requêtes des clients et les transmet à la bonne application interne (selon hôte, chemin, etc.).</dd>
+  <dt>Sous-domaine</dt><dd>Préfixe d'un domaine, comme <code>app.</code> ou <code>wordpress.</code> dans <code>entreprise.local</code>.</dd>
+  <dt>WordPress</dt><dd>CMS (système de gestion de contenu) écrit en PHP, avec base MySQL/MariaDB.</dd>
+  <dt>Node.js</dt><dd>Environnement d'exécution de JavaScript côté serveur.</dd>
+  <dt>MariaDB</dt><dd>Base de données relationnelle, dérivée de MySQL.</dd>
+  <dt>Caddy</dt><dd>Serveur web moderne avec gestion TLS automatique (Let's Encrypt et CA interne).</dd>
+</dl>
+
+<h2>3. Glossaire — Sécurité &amp; accès distant</h2>
+<dl class="twocol">
+  <dt>VPN</dt><dd>« Virtual Private Network » : un tunnel chiffré entre deux machines à travers Internet, qui simule un câble réseau privé.</dd>
+  <dt>WireGuard</dt><dd>Le protocole VPN moderne qu'on a choisi : très simple, performant, chiffrement ChaCha20-Poly1305.</dd>
+  <dt>OpenVPN</dt><dd>VPN historique, plus complexe, basé sur OpenSSL. Alternative à WireGuard.</dd>
+  <dt>Paire de clés (public/privée)</dt><dd>Chaque peer a une clé privée (qu'il garde) et une publique (qu'il partage). Permet d'authentifier sans mot de passe.</dd>
+  <dt>PSK (clé pré-partagée)</dt><dd>Une clé secrète supplémentaire propre à chaque peer. Ajoute une couche d'authentification, et durcit le tunnel face à la cryptographie quantique.</dd>
+  <dt>Tunnel</dt><dd>Une connexion chiffrée qui transporte d'autres protocoles à l'intérieur (ex. ton HTTP voyage <i>dans</i> le tunnel VPN).</dd>
+  <dt>AllowedIPs</dt><dd>Liste des plages IP qu'on accepte de router via le tunnel. <code>0.0.0.0/0</code> = full-tunnel (tout passe par le VPN).</dd>
+  <dt>Endpoint</dt><dd>L'adresse publique (IP + port) du serveur VPN, vue depuis Internet.</dd>
+  <dt>Exposition minimale</dt><dd>Principe : n'ouvrir que les ports strictement nécessaires.</dd>
+  <dt>Moindre privilège</dt><dd>Principe : chaque service / utilisateur n'a que les droits dont il a besoin, rien de plus.</dd>
+</dl>
+
+<h2>4. Glossaire — Virtualisation &amp; conteneurs</h2>
+<dl class="twocol">
+  <dt>Virtualisation</dt><dd>Faire tourner un système (OS, réseau) <b>simulé</b> par-dessus un autre. Outils : VirtualBox, VMware, Hyper-V.</dd>
+  <dt>Conteneur</dt><dd>Une application + ses dépendances empaquetées et isolées (mais qui partage le noyau Linux de l'hôte). Léger.</dd>
+  <dt>Image</dt><dd>Le modèle figé d'un conteneur (« recette ») — on instancie l'image en conteneurs.</dd>
+  <dt>Docker</dt><dd>Le moteur de conteneurs le plus répandu.</dd>
+  <dt>Docker Compose</dt><dd>Outil qui décrit une stack multi-conteneurs dans un fichier YAML — on lance tout d'un coup avec <code>docker compose up</code>.</dd>
+  <dt>Volume</dt><dd>Stockage persistant pour un conteneur (les données survivent à un redémarrage).</dd>
+  <dt>Bridge (réseau)</dt><dd>Réseau virtuel Docker par défaut, qui relie des conteneurs entre eux.</dd>
+  <dt>Réseau <code>internal</code></dt><dd>Réseau Docker sans accès Internet sortant : utilisé pour notre zone data.</dd>
+  <dt>Bind mount</dt><dd>Monter un dossier de l'hôte dans le conteneur (utilisé pour le VPN <code>/opt/infra-vpn/wg-config</code>).</dd>
+  <dt>Reverse proxy en conteneur</dt><dd>Le proxy lui-même est dans un conteneur ; il route vers les autres conteneurs par leur nom de service.</dd>
+</dl>
+
+<h2>5. Glossaire — Annuaire, partage, sauvegarde, admin</h2>
+<dl class="twocol">
+  <dt>LDAP</dt><dd>Protocole et service d'<b>annuaire</b> : on y stocke des comptes utilisateurs, des groupes, etc. OpenLDAP est l'implémentation libre.</dd>
+  <dt>Active Directory</dt><dd>L'annuaire de Microsoft (équivalent commercial de LDAP + Kerberos).</dd>
+  <dt>DN / OU</dt><dd>DN = chemin unique dans l'annuaire (ex. <code>uid=hugo,ou=people,dc=entreprise,dc=local</code>). OU = organisational unit (dossier).</dd>
+  <dt>LDIF</dt><dd>Format texte pour décrire des entrées LDAP. Notre <code>bootstrap.ldif</code> crée les comptes au démarrage.</dd>
+  <dt>Samba</dt><dd>Implémentation libre du protocole SMB/CIFS de Microsoft : permet le partage de fichiers Windows-style.</dd>
+  <dt>SMB / CIFS</dt><dd>Le protocole derrière les <code>smb://serveur/partage</code> dans le Finder ou l'Explorateur Windows.</dd>
+  <dt>Sauvegarde / restauration</dt><dd>Copier régulièrement les données critiques ; pouvoir les remettre en cas de pépin.</dd>
+  <dt>Rétention</dt><dd>Combien de versions on garde (chez nous : 10 dernières par type).</dd>
+  <dt>cron</dt><dd>Planificateur Unix : exécute une tâche selon une expression (ex. <code>*/30 * * * *</code> = toutes les 30 min).</dd>
+  <dt>systemd</dt><dd>Le gestionnaire de services moderne sur Linux. Démarre / supervise les processus.</dd>
+  <dt>SSH</dt><dd>« Secure Shell » : connexion à distance chiffrée à une machine.</dd>
+  <dt>Git / GitHub</dt><dd>Versionnement du code et hébergement. Permet de retrouver l'historique exact des modifications.</dd>
+</dl>
+
+<div class="pb"></div>
+
+<h2>Q/R — Questions probables du jury &amp; réponses</h2>
+
+<h3>Architecture &amp; choix techniques</h3>
+
+<div class="qa">
+  <div class="q">Pourquoi Docker plutôt que VirtualBox, VMware ou Packet Tracer ? <span class="lvl">facile</span></div>
+  <div class="a">La grille accepte explicitement Docker comme outil de maquette. On a choisi Docker pour la <b>reproductibilité</b> (toute la stack se redéploie en une commande), pour le <b>versionnement</b> (tout est dans Git) et pour la <b>légèreté</b>. Si on avait voulu montrer de vrais VLAN de niveau 2 ou un pfSense, on aurait pris VMware ou Packet Tracer ; ici la segmentation logique nous suffisait.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Pourquoi pas pfSense / OPNsense ? <span class="lvl med">moyenne</span></div>
+  <div class="a">pfSense est une <b>distribution complète</b> de pare-feu, riche en fonctionnalités. C'est pertinent quand on a besoin d'un vrai routeur réseau dédié. Pour notre cas — segmenter logiquement et filtrer des flux — nftables dans un conteneur multi-zones est plus léger et tout aussi explicite. C'est aussi plus pédagogique : on voit les règles écrites en clair.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Vos VLAN sont-ils de vrais VLAN ? <span class="lvl hard">piège</span></div>
+  <div class="a">Au sens strict (niveau 2 OSI avec tag 802.1Q), non : nos réseaux Docker sont des bridges isolés au niveau 3. Mais la segmentation <b>logique</b> est complète : chaque zone est sur un sous-réseau distinct, le pare-feu contrôle ce qui passe d'une zone à l'autre, et la zone data n'a aucune route sortante. C'est le résultat fonctionnel attendu par le brief, validé par la grille qui mentionne Docker.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Pourquoi le port 18443 et pas 443 ? <span class="lvl">facile</span></div>
+  <div class="a">Pour ne pas entrer en conflit avec les autres services qui tournent sur le VPS. Sur une infra dédiée, on prendrait 443 directement.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Et si le VPS tombe ? <span class="lvl">facile</span></div>
+  <div class="a">Tout est dans Git et tout est en Docker. Donc <code>git clone</code> + <code>docker compose up -d</code> sur n'importe quel hôte Linux avec Docker → la stack redémarre en quelques minutes. Les sauvegardes peuvent être restaurées dessus.</div>
+</div>
+
+<h3>Réseau &amp; pare-feu</h3>
+
+<div class="qa">
+  <div class="q">Comment garantit-on que la base n'est pas accessible depuis Internet ? <span class="lvl">facile</span></div>
+  <div class="a">Deux couches : (1) la base est sur un réseau Docker <code>internal: true</code> — elle n'a <b>aucune route</b> vers Internet ; (2) le conteneur n'a aucun port publié (<code>ports:</code> non défini) → impossible à atteindre depuis l'extérieur.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Que fait votre pare-feu nftables, concrètement ? <span class="lvl med">moyenne</span></div>
+  <div class="a">Dans le conteneur <code>infra-router-fw</code>, on charge une table <code>inet zones</code> avec un chain <code>forward</code> dont la <b>politique par défaut est drop</b>. Ensuite, on autorise explicitement les flux établis (<code>ct state established,related</code>), et un flux légitime entre deux interfaces. Tout le reste est jeté. C'est la posture « deny par défaut ».</div>
+</div>
+
+<div class="qa">
+  <div class="q">Vous filtrez bien <b>entre</b> les zones ou juste à l'entrée ? <span class="lvl hard">piège</span></div>
+  <div class="a">Le filtrage du conteneur routeur s'applique sur les flux <b>qui le traversent</b>. Pour les flux inter-conteneurs sur des bridges Docker distincts, Docker pose en plus ses propres règles iptables. La combinaison nous donne une isolation effective. Pour aller plus loin, on pourrait définir des <i>policies</i> Docker plus strictes ou utiliser des plugins réseau.</div>
+</div>
+
+<h3>Serveur web &amp; TLS</h3>
+
+<div class="qa">
+  <div class="q">Pourquoi Caddy plutôt que Nginx ou Apache ? <span class="lvl">facile</span></div>
+  <div class="a">Parce que Caddy gère le TLS <b>automatiquement</b> : on déclare deux sous-domaines, et Caddy émet les certificats tout seul, soit via Let's Encrypt, soit via une CA locale (<code>tls internal</code>). C'est cinq lignes de configuration pour deux sites HTTPS. Avec Nginx, il faudrait gérer les certificats à part avec certbot.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Vos certificats sont auto-signés. En prod ? <span class="lvl">facile</span></div>
+  <div class="a">En prod, on enlève <code>tls internal</code> et Caddy demande automatiquement les certificats à Let's Encrypt, à condition que les sous-domaines pointent vers le serveur. La configuration ne change quasiment pas.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Comment le proxy sait-il quel site afficher ? <span class="lvl med">moyenne</span></div>
+  <div class="a">Grâce au <b>SNI</b> dans le handshake TLS : le navigateur indique « je veux <code>app.entreprise.local</code> » dès l'ouverture de la connexion, avant même de chiffrer. Caddy lit cette information et sert le bon vhost. C'est le même mécanisme qu'un hébergement mutualisé.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Et pour faire du load balancing entre plusieurs Node ? <span class="lvl med">moyenne</span></div>
+  <div class="a">Caddy permet plusieurs <i>upstreams</i> dans un <code>reverse_proxy</code>. On lancerait 2 ou 3 conteneurs Node, on les listerait derrière la directive, et Caddy ferait du round-robin par défaut. C'est une extension naturelle de notre stack.</div>
+</div>
+
+<h3>Sauvegarde &amp; restauration</h3>
+
+<div class="qa">
+  <div class="q">Vos sauvegardes sont-elles incrémentales ou complètes ? <span class="lvl">facile</span></div>
+  <div class="a">Complètes (chaque fois on prend l'intégralité). Pour 25 Mo de WordPress et un dump SQL de 19 Ko, ça reste trivial. Pour un volume plus gros, on passerait sur un outil comme <code>restic</code> ou <code>borg</code> qui fait du déduplication incrémentale.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Comment garantissez-vous que la sauvegarde fonctionne ? <span class="lvl med">moyenne</span></div>
+  <div class="a">On a testé la restauration : un <code>restore.sh</code> prend un dump, le décompresse et le réinjecte dans la base. Tant qu'on n'a pas testé une restauration, on n'a pas une sauvegarde, on a un fichier d'archive.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Stratégie de rétention ? <span class="lvl med">moyenne</span></div>
+  <div class="a">Aujourd'hui : 10 dernières sauvegardes par type, donc environ 5 heures avec un run toutes les 30 min. En production, on appliquerait du « grand-père / père / fils » : par exemple 7 quotidiens, 4 hebdos, 12 mensuels.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Le stockage des sauvegardes est-il chiffré ? <span class="lvl hard">piège</span></div>
+  <div class="a">Non. Le volume Docker est dans la zone data, donc isolé du réseau, mais les fichiers ne sont pas chiffrés au repos. Pour aller plus loin : <code>restic</code> chiffre nativement les sauvegardes ; ou un volume chiffré LUKS sur l'hôte. C'est une amélioration prévue.</div>
+</div>
+
+<h3>VPN</h3>
+
+<div class="qa">
+  <div class="q">Pourquoi WireGuard plutôt qu'OpenVPN ? <span class="lvl">facile</span></div>
+  <div class="a">Trois raisons : (1) la configuration est <b>radicalement plus simple</b> (un fichier .conf de 10 lignes par client) ; (2) les performances sont meilleures ; (3) la surface d'attaque est plus faible — quelques milliers de lignes de code contre quelques centaines de milliers pour OpenVPN.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Qu'est-ce qui fait votre « authentification forte » ? <span class="lvl med">moyenne</span></div>
+  <div class="a">Chaque peer a sa propre paire de clés Curve25519 (publique/privée) <b>plus</b> une clé pré-partagée (PSK) unique. Le serveur n'accepte un client que si les deux concordent. Pas de mot de passe à voler, pas de phishing possible.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Vous gérez la révocation comment ? <span class="lvl med">moyenne</span></div>
+  <div class="a">On retire le bloc <code>[Peer]</code> de la conf serveur et on redémarre WireGuard. Le client perd l'accès immédiatement. Avec notre image conteneurisée, on retire le nom de la variable d'environnement <code>PEERS</code> et on recrée le conteneur.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Le VPN est-il « full-tunnel » ou « split-tunnel » ? <span class="lvl hard">piège</span></div>
+  <div class="a">Full-tunnel : <code>AllowedIPs = 0.0.0.0/0</code> du côté client → <b>tout</b> son trafic Internet passe par le tunnel. C'est ce qu'on veut pour un télétravailleur : son DNS et son trafic sont protégés.</div>
+</div>
+
+<h3>Bonus LDAP &amp; Samba</h3>
+
+<div class="qa">
+  <div class="q">Samba est-il authentifié par LDAP ? <span class="lvl hard">piège</span></div>
+  <div class="a">Pas dans cette version : Samba a ses propres comptes, mais les UIDs sont alignés (10001 pour Hugo, etc.) avec LDAP. L'intégration directe se fait avec le back-end <i>ldapsam</i> ou via SSSD/winbind ; c'est notre piste d'évolution.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Comment on ajoute / supprime un utilisateur LDAP ? <span class="lvl">facile</span></div>
+  <div class="a">Ajout : on rajoute un bloc dans <code>bootstrap.ldif</code> et on relance ; ou à chaud, avec <code>ldapadd</code> en se branchant sur l'annuaire avec les credentials admin. Suppression : <code>ldapdelete</code>.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Le partage Samba est-il accessible depuis Internet ? <span class="lvl">facile</span></div>
+  <div class="a">Non, et c'est volontaire — Samba sur Internet est une mauvaise idée. Le conteneur n'a aucun port publié ; il faut être <b>sur le VPN</b> ou sur le LAN de l'entreprise pour y accéder.</div>
+</div>
+
+<h3>Docker, sécurité globale, secrets</h3>
+
+<div class="qa">
+  <div class="q">Comment gérez-vous les secrets (mots de passe) ? <span class="lvl hard">piège</span></div>
+  <div class="a">Ici, en clair dans le <code>docker-compose.yml</code> pour la démo — c'est conscient et documenté. En production, on utilise les <b>secrets Docker</b> ou un fichier <code>.env</code> non versionné, idéalement un coffre type Vault ou les <i>secrets</i> du fournisseur cloud.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Docker est-il une vraie isolation pour la sécurité ? <span class="lvl hard">piège</span></div>
+  <div class="a">L'isolation est forte mais pas absolue (les conteneurs partagent le noyau). Pour des charges très sensibles, on ajouterait des profils AppArmor/seccomp, on tournerait en <i>rootless</i>, ou on passerait sur des VM légères type Firecracker / Kata.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Et si quelqu'un compromet un conteneur ? <span class="lvl med">moyenne</span></div>
+  <div class="a">Grâce à la segmentation : un attaquant qui prend le WordPress n'atteint pas la base directement par le réseau public (zone data <i>internal</i>). Il peut taper sur la base via les credentials applicatifs, mais il ne peut pas exfiltrer en sortie (pas de route Internet). Bonus : on ajouterait des règles de sortie au pare-feu pour le proxy aussi.</div>
+</div>
+
+<h3>Méthode &amp; doc</h3>
+
+<div class="qa">
+  <div class="q">Comment vous êtes-vous répartis le travail à 3 ? <span class="lvl">facile</span></div>
+  <div class="a">Hugo sur l'architecture, le réseau et le VPN. Shakil sur le serveur web et le reverse proxy. Mathéo sur la sauvegarde et le bonus LDAP/Samba. La doc et la grille en commun.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Où est votre documentation ? <span class="lvl">facile</span></div>
+  <div class="a">Tout est dans le dépôt GitHub <code>H129hj/infra-entreprise-b1</code> : README, doc technique, schéma réseau, support oral, captures de preuves, et même les scripts de génération du diaporama.</div>
+</div>
+
+<div class="qa">
+  <div class="q">Qu'est-ce que vous feriez avec plus de temps ? <span class="lvl med">moyenne</span></div>
+  <div class="a">Cinq pistes : (1) intégration Samba ↔ LDAP avec <i>ldapsam</i> ; (2) un vrai domaine + Let's Encrypt ; (3) du monitoring (Prometheus + Grafana) ; (4) du load balancing actif sur Caddy ; (5) du chiffrement au repos des sauvegardes via <i>restic</i>.</div>
+</div>
+
+<p style="margin-top: 22px; color:#5a6479; font-size: 9.5pt">
+B1 INFRA — Groupe 3 · Document interne au trinôme · à relire la veille de l'oral.
+</p>
+
+</body></html>
