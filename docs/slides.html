@@ -1,0 +1,279 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Infrastructure d'entreprise sécurisée — Oral B1 INFRA</title>
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --line:#30363d; --ink:#e6edf3; --mut:#8b949e;
+    --acc:#58a6ff; --ok:#3fb950; --warn:#d29922; --bad:#f85149;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,sans-serif}
+  .deck{counter-reset:slide}
+  .slide{
+    width:1280px;height:720px;
+    padding:56px 64px;
+    page-break-after:always;
+    break-after:page;
+    display:flex;flex-direction:column;
+    background:
+      radial-gradient(1200px 600px at 90% -10%, #1e3a8a22, transparent 70%),
+      radial-gradient(900px 500px at -10% 110%, #0ea5e91a, transparent 70%),
+      var(--bg);
+    position:relative;
+    border-bottom:1px solid #0006;
+  }
+  .slide::after{
+    content:counter(slide) " / 12";
+    counter-increment:slide;
+    position:absolute;right:24px;bottom:18px;color:var(--mut);font-size:13px;letter-spacing:.5px
+  }
+  .slide::before{
+    content:"Projet B1 INFRA · Groupe 3 · Hugo BERTON & Shakil KHALDI";
+    position:absolute;left:24px;bottom:18px;color:var(--mut);font-size:13px;letter-spacing:.5px
+  }
+  h1{font-size:54px;margin:0 0 8px;letter-spacing:-.5px;line-height:1.05}
+  h2{font-size:34px;margin:0 0 20px;color:var(--acc);letter-spacing:-.3px}
+  h3{font-size:22px;margin:0 0 8px;color:var(--ink)}
+  p{font-size:21px;line-height:1.45;color:var(--ink);margin:6px 0}
+  ul{font-size:20px;line-height:1.55;color:var(--ink);padding-left:22px;margin:6px 0}
+  li{margin:6px 0}
+  code,.kbd{font-family:'JetBrains Mono','SF Mono',ui-monospace,Menlo,monospace;background:#0009;border:1px solid var(--line);padding:1px 8px;border-radius:6px;color:#9ecbff;font-size:.92em}
+  .row{display:flex;gap:24px;align-items:stretch;flex:1;min-height:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column;gap:6px}
+  .card h3{color:var(--acc);font-size:18px;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px}
+  .pill{display:inline-block;padding:3px 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--mut);margin-right:6px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;flex:1;min-height:0}
+  table{width:100%;border-collapse:collapse;font-size:17px}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+  th{color:var(--mut);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.6px}
+  .ok{color:var(--ok)} .warn{color:var(--warn)} .acc{color:var(--acc)} .mut{color:var(--mut)}
+  .hero{display:flex;flex:1;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+  .meta{color:var(--mut);font-size:18px;margin-top:14px}
+  img.full{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff}
+  .imgwrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  .imgwrap img{max-height:520px;max-width:100%;border-radius:10px;border:1px solid var(--line);background:#fff}
+  .stack{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:14px}
+  .svc{background:#0d1117;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+  .svc b{display:block;color:var(--acc);font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+  .kpi{display:flex;gap:14px;margin-top:10px}
+  .kpi div{background:#0d1117;border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+  .kpi b{display:block;color:var(--acc);font-size:22px}
+  .kpi span{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+</style></head><body><div class="deck">
+
+<!-- 1 -->
+<section class="slide">
+  <div class="hero">
+    <span class="pill">UF B1 INFRA · Ynov Informatique</span>
+    <h1 style="margin-top:18px">Conception &amp; déploiement<br/>d'une infrastructure<br/>d'entreprise <span class="acc">sécurisée</span></h1>
+    <p class="meta">Hugo BERTON · Shakil KHALDI — Groupe 3</p>
+    <p class="meta">Oral final — 28 mai 2026</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <h2>Contexte &amp; besoin client</h2>
+  <p>Siège social d'une entreprise en croissance — l'équipe doit&nbsp;:</p>
+  <ul>
+    <li><b>Segmenter</b> le réseau interne (RH, Compta, Technique) pour réduire la surface d'attaque.</li>
+    <li><b>Héberger plusieurs applications web</b> (PHP + Node) sur un même serveur, en HTTPS, avec sous-domaines distincts.</li>
+    <li><b>Sauvegarder</b> automatiquement les données critiques et pouvoir restaurer rapidement.</li>
+    <li><b>Permettre l'accès distant</b> sécurisé aux ressources internes (télétravail).</li>
+    <li><i>Bonus :</i> partage de fichiers et annuaire centralisé.</li>
+  </ul>
+  <div class="kpi">
+    <div><b>4 axes</b><span>réseau · web · sauvegarde · accès distant</span></div>
+    <div><b>9 services</b><span>conteneurisés, reproductibles</span></div>
+    <div><b>3 ports</b><span>exposés sur Internet</span></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <h2>Architecture — vue d'ensemble</h2>
+  <div class="imgwrap"><img src="schema-reseau.png" alt="Schéma réseau"></div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <h2>Plan d'adressage</h2>
+  <table>
+    <tr><th>Zone</th><th>Sous-réseau</th><th>Hôtes</th><th>Particularité</th></tr>
+    <tr><td><b>DMZ</b></td><td>172.30.0.0/24</td><td>Reverse proxy · Routeur/pare-feu</td><td>Exposition contrôlée</td></tr>
+    <tr><td><b>LAN technique</b></td><td>172.30.10.0/24</td><td>WordPress .20 · Node .30 · DNS .53 · LDAP .60 · Samba .70</td><td>Serveurs applicatifs</td></tr>
+    <tr><td><b>LAN data</b></td><td>172.30.20.0/24</td><td>MariaDB .10 · Backup</td><td><span class="warn">internal</span> — sans Internet sortant</td></tr>
+    <tr><td><b>VPN</b></td><td>10.13.13.0/24</td><td>WireGuard .1 · hugo .2 · shakil .3</td><td>Tunnel chiffré <code>51820/udp</code></td></tr>
+  </table>
+  <p style="margin-top:14px" class="mut">Ports publics : <code>18080/tcp</code> · <code>18443/tcp</code> (web) · <code>51820/udp</code> (VPN). Tout le reste est interne.</p>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <h2>Étape 1 — Réseau &amp; segmentation</h2>
+  <div class="row">
+    <div class="card">
+      <h3>Cloisonnement</h3>
+      <ul>
+        <li>Trois zones isolées par défaut</li>
+        <li>LAN data <span class="warn">internal</span> : la base n'a aucune route sortante</li>
+        <li>DNS + DHCP internes (dnsmasq, zone <code>entreprise.local</code>)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Routeur / pare-feu</h3>
+      <ul>
+        <li>Conteneur multi-homed (3 interfaces)</li>
+        <li>Règles <b>nftables</b> — politique <code>forward = drop</code></li>
+        <li>Filtrage explicite par flux + compteurs</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Démo</h3>
+      <p><code>docker logs infra-router-fw</code> → interfaces, règles, tests de joignabilité inter-zones (OK).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <h2>Étape 2 — Serveur web multi-applications</h2>
+  <div class="row">
+    <div class="card" style="flex:1.1">
+      <h3>Reverse proxy + TLS</h3>
+      <ul>
+        <li><b>Caddy</b> termine le TLS (CA interne)</li>
+        <li>Routage par sous-domaine (SNI)</li>
+        <li>2 apps, 2 sous-domaines, 1 entrée HTTPS</li>
+      </ul>
+      <div class="stack" style="margin-top:8px">
+        <div class="svc"><b>Caddy</b>18080/18443</div>
+        <div class="svc"><b>WordPress</b>:80 PHP</div>
+        <div class="svc"><b>Node.js</b>:3000</div>
+        <div class="svc"><b>MariaDB</b>data zone</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Démo</h3>
+      <p><code>https://wordpress.entreprise.local:18443</code></p>
+      <p><code>https://app.entreprise.local:18443</code></p>
+      <p class="mut">Certificats émis par la CA Caddy locale ; en prod : Let's Encrypt avec un vrai domaine.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <h2>Étape 2 — preuve visuelle</h2>
+  <div class="imgwrap"><img src="screenshots/02-wordpress-site.png" alt="WordPress live"></div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <h2>Étape 3 — Sauvegarde automatisée</h2>
+  <div class="row">
+    <div class="card">
+      <h3>Mécanisme</h3>
+      <ul>
+        <li>Planification <b>cron</b> (<code>*/30 * * * *</code>)</li>
+        <li><code>mysqldump</code> de la base WordPress</li>
+        <li><code>tar.gz</code> des fichiers du site</li>
+        <li>Rétention : 10 dernières sauvegardes</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Stockage isolé</h3>
+      <ul>
+        <li>Volume dédié <code>backup_storage</code></li>
+        <li>Hébergé en zone <b>data</b> (sans Internet)</li>
+        <li>Aucun port exposé</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Restauration testée</h3>
+      <p><code>/restore.sh /backups/db_&lt;TS&gt;.sql.gz</code></p>
+      <p class="mut">Dernier dump : <span class="ok">18,9 Ko</span> (SQL) + <span class="ok">25,9 Mo</span> (fichiers).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <h2>Sécurité &amp; accès distant — VPN WireGuard</h2>
+  <div class="row">
+    <div class="card">
+      <h3>Chiffrement &amp; authentification</h3>
+      <ul>
+        <li>WireGuard (ChaCha20-Poly1305, Curve25519)</li>
+        <li>Clé par peer + <b>PresharedKey</b> unique = auth forte</li>
+        <li>Exposition minimale : <code>51820/udp</code></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Ressource interne VPN-only</h3>
+      <ul>
+        <li>Service <code>whoami</code> lié à <code>10.13.13.1:80</code></li>
+        <li><b>Jamais</b> exposé publiquement</li>
+        <li>Démo : VPN actif → page accessible ; VPN coupé → injoignable</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Posture globale</h3>
+      <ul>
+        <li>3 ports publics seulement</li>
+        <li>TLS interne sur tout le web</li>
+        <li>Zone data sans Internet sortant</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <h2>Bonus — Annuaire &amp; partage de fichiers</h2>
+  <div class="row">
+    <div class="card">
+      <h3>OpenLDAP</h3>
+      <ul>
+        <li>Base <code>dc=entreprise,dc=local</code></li>
+        <li>OU <code>people</code> · <code>groups</code></li>
+        <li>3 comptes provisionnés : hugo, shakil, alice</li>
+        <li>Gestion centralisée des identités</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Samba</h3>
+      <ul>
+        <li>Partages : <b>partage-entreprise</b> · <b>technique</b></li>
+        <li>Utilisateurs &amp; permissions explicites</li>
+        <li>Journalisation des accès</li>
+        <li>Non exposé publiquement (accès interne / VPN)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <h2>Couverture de la grille (note technique · coef. 3)</h2>
+  <table>
+    <tr><th>Compétence</th><th>Pond.</th><th>Comment c'est couvert</th></tr>
+    <tr><td>Mise en œuvre d'un réseau simple</td><td>4</td><td>3 sous-réseaux, plan d'adressage, DNS/DHCP, routage</td></tr>
+    <tr><td>Infrastructure client-serveur</td><td>4</td><td>Reverse proxy + 2 apps + DB + clients (web, VPN, Samba)</td></tr>
+    <tr><td>Administration d'un système</td><td>4</td><td>Docker/Linux, services persistants, scripts Bash backup/firewall</td></tr>
+    <tr><td>Virtualisation &amp; maquette</td><td>3</td><td>Stack Docker Compose fidèle au besoin client</td></tr>
+    <tr><td>Sécurisation (pare-feu, segmentation, VPN)</td><td>3</td><td>nftables, TLS, VPN, exposition minimale, zone data isolée</td></tr>
+    <tr><td>Documentation technique</td><td>3</td><td>Doc + READMEs + support oral + dépôt Git public</td></tr>
+  </table>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="hero">
+    <h1>Merci.</h1>
+    <p style="font-size:24px;color:var(--mut);margin-top:18px">Questions ?</p>
+    <p class="meta" style="margin-top:24px">Dépôt : <code>github.com/H129hj/infra-entreprise-b1</code></p>
+    <p class="meta">Hugo BERTON · Shakil KHALDI</p>
+  </div>
+</section>
+
+</div></body></html>
