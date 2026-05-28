@@ -61,20 +61,20 @@ restauration : docker exec infra-backup /restore.sh /backups/db_&lt;TS&gt;.sql.g
 <div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker ps — wg-infra + ressource interne VPN-only</span></div>
 <pre>infra wg-infra      lscr.io/linuxserver/wireguard   <span class="ok">Up</span>   0.0.0.0:<span class="p">51820->51820/udp</span>
 intranet-app        traefik/whoami                  <span class="ok">Up</span>   (aucun port publié — joignable seulement via le tunnel à <span class="p">10.13.13.1:80</span>)
-Peers générés : hugo (10.13.13.2), shakil (10.13.13.3) — clé + PresharedKey (auth forte)</pre></div>
+Peers générés : hugo (10.13.13.2), shakil (10.13.13.3), matheo (10.13.13.4) — clé + PresharedKey (auth forte)</pre></div>
 
 <h2>5. BONUS — Annuaire LDAP + partage de fichiers Samba</h2>
 <div class="term"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">docker logs infra-ldap  &  infra-samba</span></div>
 <pre><span class="c"># OpenLDAP (annuaire central, base dc=entreprise,dc=local)</span>
 Add bootstrap schemas...
 Add image bootstrap ldif...
-<span class="ok">Add custom bootstrap ldif...</span>   -> OU people/groups + utilisateurs hugo, shakil, alice
+<span class="ok">Add custom bootstrap ldif...</span>   -> OU people/groups + utilisateurs hugo, shakil, matheo
 slapd starting   (389/tcp, 636/tcp — interne uniquement)
 
 <span class="c"># Samba (serveur de fichiers, partages : partage-entreprise + technique)</span>
 <span class="ok">Added user hugo.</span>
 <span class="ok">Added user shakil.</span>
-<span class="ok">Added user alice.</span>
+<span class="ok">Added user matheo.</span>
 smbd version 4.12.2 started.
 daemon_ready: smbd finished starting up and ready to serve connections
 <span class="c"># non exposé publiquement -> accès via le réseau interne / VPN</span></pre></div>

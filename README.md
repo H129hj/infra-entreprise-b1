@@ -1,6 +1,6 @@
 # Infrastructure d'entreprise sécurisée — Projet B1 INFRA
 
-**Groupe 3 — Hugo BERTON & Shakil KHALDI** · SUJET FINAL (3 étapes + sécurité/VPN)
+**Groupe 3 — Hugo BERTON, Shakil KHALDI & Mathéo AMOUROUX** · SUJET FINAL (3 étapes + sécurité/VPN)
 
 Stack Docker reproductible déployable sur n'importe quel hôte Linux avec Docker.
 
@@ -13,7 +13,7 @@ Stack Docker reproductible déployable sur n'importe quel hôte Linux avec Docke
    (`wordpress.entreprise.local`, `app.entreprise.local`).
 3. **Sauvegarde automatisée** — service `backup` (cron) : dump MariaDB + archive des fichiers
    vers un **stockage isolé** (`backup_storage`), rétention 10, **restauration testée** (`restore.sh`).
-4. **Bonus** — **annuaire OpenLDAP** (`dc=entreprise,dc=local`, utilisateurs hugo/shakil/alice)
+4. **Bonus** — **annuaire OpenLDAP** (`dc=entreprise,dc=local`, utilisateurs hugo/shakil/matheo)
    + **partage de fichiers Samba** (`partage-entreprise`, `technique`), accès interne/VPN.
 
 Total : **9 services** (`docker compose ps`).

@@ -23,7 +23,7 @@
 ## 🎬 Déroulé minuté (15 min)
 
 ### ⌚ 0:00 — Slide 1 (titre)
-> **« Bonjour, on est Hugo et Shakil, Groupe 3. Notre projet : concevoir et déployer une infrastructure d'entreprise sécurisée, couvrant les trois étapes imposées et le bonus. »**
+> **« Bonjour, on est Hugo, Shakil et Mathéo, Groupe 3. Notre projet : concevoir et déployer une infrastructure d'entreprise sécurisée, couvrant les trois étapes imposées et le bonus. »**
 
 ### ⌚ 0:30 — Slide 2 (contexte)
 > **« Le client est une PME en croissance. Quatre besoins : segmenter le réseau, héberger plusieurs apps web, sauvegarder automatiquement, et permettre le télétravail. Plus le bonus : partage de fichiers et annuaire. »**
@@ -84,7 +84,7 @@ ssh ubuntu@144.91.126.51 'docker logs infra-samba'
 
 **Dans Finder (Mac) :** Aller → Se connecter au serveur → `smb://10.13.13.1/partage-entreprise` → login `hugo` / `hugo_pass_2026`.
 
-> **« Bonus : un annuaire OpenLDAP centralise les comptes (hugo, shakil, alice). Et un serveur Samba expose deux partages, accessibles seulement en interne ou via VPN. »**
+> **« Bonus : un annuaire OpenLDAP centralise les comptes (hugo, shakil, matheo). Et un serveur Samba expose deux partages, accessibles seulement en interne ou via VPN. »**
 
 ### ⌚ 14:00 — Slide 11 (couverture grille) + Slide 12 (merci) — *1 min*
 

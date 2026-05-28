@@ -1,6 +1,6 @@
 # =====================================================================
 # Projet B1 INFRA - Infrastructure d'entreprise securisee (SUJET FINAL)
-# Groupe 3 - Hugo BERTON & Shakil KHALDI
+# Groupe 3 - Hugo BERTON, Shakil KHALDI & Mathéo AMOUROUX
 # Etape 1 : segmentation reseau + routeur/firewall + DNS/DHCP
 # Etape 2 : serveur web multi-applications (WordPress + Node) + reverse proxy TLS
 # Etape 3 : sauvegarde automatisee (service backup -> stockage isole)
@@ -137,9 +137,9 @@ services:
     command: >
       -u "hugo;hugo_pass_2026"
       -u "shakil;shakil_pass_2026"
-      -u "alice;alice_pass_2026"
-      -s "partage-entreprise;/share;yes;no;no;hugo,shakil,alice"
-      -s "technique;/share/technique;yes;no;no;hugo,shakil"
+      -u "matheo;matheo_pass_2026"
+      -s "partage-entreprise;/share;yes;no;no;hugo,shakil,matheo"
+      -s "technique;/share/technique;yes;no;no;hugo,shakil,matheo"
       -p
     volumes:
       - samba_share:/share

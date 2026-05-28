@@ -16,7 +16,7 @@ h1{color:#0f3460}code{background:#eee;padding:2px 6px;border-radius:4px}</style>
 <li>Heure serveur : <code>${new Date().toISOString()}</code></li>
 <li>Chemin demande : <code>${req.url}</code></li>
 </ul>
-<p>Projet B1 INFRA - Groupe 3 (Hugo BERTON & Shakil KHALDI).</p>
+<p>Projet B1 INFRA - Groupe 3 (Hugo BERTON, Shakil KHALDI & Mathéo AMOUROUX).</p>
 </body></html>`);
 });
 

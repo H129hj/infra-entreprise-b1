@@ -1,6 +1,6 @@
 # Support d'oral — Infrastructure d'entreprise sécurisée (15 min)
 
-**Groupe 3 : Hugo BERTON & Shakil KHALDI** — B1 INFRA — Oral final 15 min + 5 min Q/R
+**Groupe 3 : Hugo BERTON, Shakil KHALDI & Mathéo AMOUROUX** — B1 INFRA — Oral final 15 min + 5 min Q/R
 
 > Trame de présentation alignée sur la grille (réseau, client-serveur, admin,
 > virtualisation, sécurité, doc). Objectif : montrer du **fonctionnel** + justifier les choix.
@@ -37,7 +37,7 @@ accès distant sécurisé aux ressources internes.
 - Couper le VPN → la ressource devient injoignable. Authentification : clé + PSK par utilisateur.
 
 ### 6bis. Bonus — Annuaire LDAP + partage Samba (1 min) — *si le temps le permet*
-- Annuaire OpenLDAP `dc=entreprise,dc=local` : utilisateurs hugo/shakil/alice (gestion centralisée).
+- Annuaire OpenLDAP `dc=entreprise,dc=local` : utilisateurs hugo/shakil/matheo (gestion centralisée).
 - Partage de fichiers Samba (`partage-entreprise`, `technique`) accessible via le réseau interne / VPN.
 - Montrer `docker logs infra-ldap` (import des comptes) et un montage `smb://` depuis le poste.
 

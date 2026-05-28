@@ -1,6 +1,6 @@
 # Documentation technique — Infrastructure d'entreprise sécurisée
 
-**Projet UF B1 INFRA — SUJET FINAL** · **Groupe 3 : Hugo BERTON & Shakil KHALDI**
+**Projet UF B1 INFRA — SUJET FINAL** · **Groupe 3 : Hugo BERTON, Shakil KHALDI & Mathéo AMOUROUX**
 Hôte : VPS Contabo `144.91.126.51` (Ubuntu 24.04 LTS) · Orchestration : Docker Compose
 Dépôt : https://github.com/H129hj/infra-entreprise-b1
 
@@ -51,7 +51,7 @@ réversible via `docker compose down -v`.
 | DMZ | 172.30.0.0/24 | reverse-proxy, router-fw | Exposition contrôlée |
 | LAN technique | 172.30.10.0/24 | reverse-proxy .10, wordpress .20, nodeapp .30, dns .53 | Serveurs applicatifs |
 | LAN data (*internal*) | 172.30.20.0/24 | db .10, backup | Données — **aucun accès Internet sortant** |
-| VPN | 10.13.13.0/24 | serveur .1, hugo .2, shakil .3 | Accès distant chiffré |
+| VPN | 10.13.13.0/24 | serveur .1, hugo .2, shakil .3, matheo .4 | Accès distant chiffré |
 | DHCP (démo) | 172.30.10.100-150 | — | Distribution dynamique sur le LAN technique |
 
 ## 4. Choix techniques & justifications
@@ -107,7 +107,7 @@ docker exec infra-backup /restore.sh /backups/db_<TS>.sql.gz   # restauration
 ## 7bis. Bonus — Annuaire LDAP + partage de fichiers Samba
 
 - **Annuaire central** : `ldap` (OpenLDAP, base `dc=entreprise,dc=local`). Les unités
-  d'organisation (`people`, `groups`) et les utilisateurs (hugo, shakil, alice) sont
+  d'organisation (`people`, `groups`) et les utilisateurs (hugo, shakil, matheo) sont
   créés au démarrage via `bonus/ldap/bootstrap.ldif`. Service interne (389/636, non exposé).
 - **Serveur de fichiers** : `samba` (Samba), partages `partage-entreprise` et `technique`,
   utilisateurs gérés et journalisation des accès (`docker logs infra-samba`).

@@ -38,14 +38,14 @@ homeDirectory: /home/shakil
 loginShell: /bin/bash
 userPassword: shakil_pass_2026
 
-dn: uid=alice,ou=people,dc=entreprise,dc=local
+dn: uid=matheo,ou=people,dc=entreprise,dc=local
 objectClass: inetOrgPerson
 objectClass: posixAccount
-uid: alice
-cn: Alice Martin
-sn: Martin
+uid: matheo
+cn: Matheo Amouroux
+sn: Amouroux
 uidNumber: 10003
 gidNumber: 10001
-homeDirectory: /home/alice
+homeDirectory: /home/matheo
 loginShell: /bin/bash
-userPassword: alice_pass_2026
+userPassword: matheo_pass_2026

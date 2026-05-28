@@ -27,7 +27,7 @@
     position:absolute;right:24px;bottom:18px;color:var(--mut);font-size:13px;letter-spacing:.5px
   }
   .slide::before{
-    content:"Projet B1 INFRA · Groupe 3 · Hugo BERTON & Shakil KHALDI";
+    content:"Projet B1 INFRA · Groupe 3 · Hugo BERTON, Shakil KHALDI & Mathéo AMOUROUX";
     position:absolute;left:24px;bottom:18px;color:var(--mut);font-size:13px;letter-spacing:.5px
   }
   h1{font-size:54px;margin:0 0 8px;letter-spacing:-.5px;line-height:1.05}
@@ -65,7 +65,7 @@
   <div class="hero">
     <span class="pill">UF B1 INFRA · Ynov Informatique</span>
     <h1 style="margin-top:18px">Conception &amp; déploiement<br/>d'une infrastructure<br/>d'entreprise <span class="acc">sécurisée</span></h1>
-    <p class="meta">Hugo BERTON · Shakil KHALDI — Groupe 3</p>
+    <p class="meta">Hugo BERTON · Shakil KHALDI · Mathéo AMOUROUX — Groupe 3</p>
     <p class="meta">Oral final — 28 mai 2026</p>
   </div>
 </section>
@@ -102,7 +102,7 @@
     <tr><td><b>DMZ</b></td><td>172.30.0.0/24</td><td>Reverse proxy · Routeur/pare-feu</td><td>Exposition contrôlée</td></tr>
     <tr><td><b>LAN technique</b></td><td>172.30.10.0/24</td><td>WordPress .20 · Node .30 · DNS .53 · LDAP .60 · Samba .70</td><td>Serveurs applicatifs</td></tr>
     <tr><td><b>LAN data</b></td><td>172.30.20.0/24</td><td>MariaDB .10 · Backup</td><td><span class="warn">internal</span> — sans Internet sortant</td></tr>
-    <tr><td><b>VPN</b></td><td>10.13.13.0/24</td><td>WireGuard .1 · hugo .2 · shakil .3</td><td>Tunnel chiffré <code>51820/udp</code></td></tr>
+    <tr><td><b>VPN</b></td><td>10.13.13.0/24</td><td>WireGuard .1 · hugo .2 · shakil .3 · matheo .4</td><td>Tunnel chiffré <code>51820/udp</code></td></tr>
   </table>
   <p style="margin-top:14px" class="mut">Ports publics : <code>18080/tcp</code> · <code>18443/tcp</code> (web) · <code>51820/udp</code> (VPN). Tout le reste est interne.</p>
 </section>
@@ -236,7 +236,7 @@
       <ul>
         <li>Base <code>dc=entreprise,dc=local</code></li>
         <li>OU <code>people</code> · <code>groups</code></li>
-        <li>3 comptes provisionnés : hugo, shakil, alice</li>
+        <li>3 comptes provisionnés : hugo, shakil, matheo</li>
         <li>Gestion centralisée des identités</li>
       </ul>
     </div>
@@ -272,7 +272,7 @@
     <h1>Merci.</h1>
     <p style="font-size:24px;color:var(--mut);margin-top:18px">Questions ?</p>
     <p class="meta" style="margin-top:24px">Dépôt : <code>github.com/H129hj/infra-entreprise-b1</code></p>
-    <p class="meta">Hugo BERTON · Shakil KHALDI</p>
+    <p class="meta">Hugo BERTON · Shakil KHALDI · Mathéo AMOUROUX</p>
   </div>
 </section>
 
