@@ -123,8 +123,8 @@ services:
       LDAP_ADMIN_PASSWORD: "admin_ldap_2026"
     volumes:
       - ./bonus/ldap:/container/service/slapd/assets/config/bootstrap/ldif/custom:ro
-      - ldap_data:/var/lib/ldap
-      - ldap_conf:/etc/ldap/slapd.d
+      - ldap_data_v2:/var/lib/ldap
+      - ldap_conf_v2:/etc/ldap/slapd.d
     networks:
       lan_tech:
         ipv4_address: 172.30.10.60
@@ -165,6 +165,6 @@ volumes:
   wp_files:
   db_data:
   backup_storage:
-  ldap_data:
-  ldap_conf:
+  ldap_data_v2:
+  ldap_conf_v2:
   samba_share:
