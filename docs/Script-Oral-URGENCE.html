@@ -1,0 +1,354 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Script ORAL — Plan B à 2 (Hugo + Mathéo)</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm 16mm 14mm; }
+  body { font: 11pt/1.5 -apple-system, "Helvetica Neue", Arial, sans-serif; color: #1a1f2c; }
+  h1 { font-size: 22pt; margin: 0 0 4px; color: #a3262c; letter-spacing: -.3px }
+  .sub { color: #5a6479; font-size: 10pt; margin-bottom: 14px }
+  h2 { font-size: 14pt; margin: 22px 0 6px; color: #a3262c; border-bottom: 2px solid #a3262c; padding-bottom: 4px }
+  h3 { font-size: 12pt; margin: 12px 0 4px; color: #1a1f2c }
+  .warn { background:#fff1f0; border-left: 5px solid #a3262c; padding: 10px 14px; margin: 8px 0 16px; font-size: 11pt }
+  .legend { background:#f3f6fb; border-left: 4px solid #0f3460; padding: 8px 12px; margin: 8px 0 16px; font-size: 10pt }
+  .who { display:inline-block; padding: 2px 10px; border-radius: 999px; font-weight: 700; font-size: 11pt }
+  .who.h { background:#dbeafe; color:#1d4ed8 }
+  .who.m { background:#dcfce7; color:#15803d }
+  .step { border: 1px solid #d8dde6; border-radius: 10px; padding: 10px 14px; margin: 10px 0 16px; page-break-inside: avoid }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px }
+  .head .t { font-weight: 700; color: #0f3460; font-size: 12pt }
+  .head .meta { color: #5a6479; font-size: 9.5pt }
+  .say { background: #fff; border: 1px dashed #b9c3d5; padding: 10px 14px; border-radius: 6px; margin: 6px 0; font-size: 11.5pt; line-height: 1.55 }
+  .say::before { content: "🗣  "; color: #0f3460 }
+  .say.read { background:#fffbe6; border:2px solid #facc15 }
+  .say.read::before { content: "📖 LIS-MOI :  "; font-weight: 700; color:#92400e }
+  .do { font-size: 10pt; color: #2d3a52; margin: 4px 0 2px }
+  .do::before { content: "▶  "; color: #1e7c4e }
+  .show { font-size: 10pt; color: #2d3a52; margin: 4px 0 2px }
+  .show::before { content: "📺  " }
+  .tip { font-size: 9.5pt; color: #7a4d12; background: #fff7e6; border-left: 3px solid #d29922; padding: 4px 10px; margin: 6px 0; border-radius: 4px }
+  .escape { background: #fef3f2; border-left: 4px solid #a3262c; padding: 6px 10px; margin: 6px 0; font-size: 10pt; border-radius:4px }
+  .escape::before { content: "🆘 SI JE BLOQUE : "; font-weight:700; color:#a3262c }
+  code { font: 10pt "SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace; background: #f3f6fb; padding: 1px 5px; border-radius: 4px }
+  .pb { page-break-after: always }
+  ul.compact li { margin: 1px 0 }
+  table { width: 100%; border-collapse: collapse; font-size: 10.5pt }
+  th,td { padding: 6px 8px; border-bottom: 1px solid #e2e6ee; text-align: left; vertical-align: top }
+  th { background:#eef3fb; color:#0f3460 }
+</style></head>
+<body>
+
+<h1>🚨 Script ORAL — Plan B à 2</h1>
+<div class="sub">B1 INFRA · Hugo BERTON &amp; Mathéo AMOUROUX · 29 mai 2026 · Shakil absent</div>
+
+<div class="warn">
+  <b>Situation.</b> Shakil n'est pas là aujourd'hui. On présente <b>à deux</b>, Mathéo et Hugo. Mathéo
+  porte la partie technique. Hugo gère l'intro, l'archi en mode "narrateur", la démo VPN
+  (qui n'est que des clics), et la conclusion. <b>Tu ne dois rien improviser de technique</b> —
+  toutes les phrases à dire sont écrites mot-pour-mot dans les cadres jaunes.
+</div>
+
+<div class="legend">
+  <b>Comment on annonce l'absence ?</b> Tout début de l'oral, en une phrase, naturelle :
+  « <i>Bonjour, on est Hugo et Mathéo, Groupe 3. Notre coéquipier Shakil est absent aujourd'hui,
+  on présente à deux.</i> » Pas d'excuse, pas de drame. Le jury n'en fera pas un sujet.
+</div>
+
+<h2>Nouvelle répartition (Plan B)</h2>
+<table>
+  <tr><th style="width:25%">Bloc</th><th>Qui parle</th><th>Démo / action</th></tr>
+  <tr><td>1. Intro + Contexte (slides 1-2)</td><td><span class="who h">Hugo</span> — lit son script</td><td>Aucune</td></tr>
+  <tr><td>2. Architecture + Plan d'adressage (3-4)</td><td><span class="who m">Mathéo</span></td><td>Pointe le schéma</td></tr>
+  <tr><td>3. Étape 1 — Réseau (5)</td><td><span class="who m">Mathéo</span></td><td>Lance la cmd <code>docker logs infra-router-fw</code></td></tr>
+  <tr><td>4. Étape 2 — Web multi-apps (6-7)</td><td><span class="who m">Mathéo</span></td><td>Ouvre WordPress + App Node dans le navigateur</td></tr>
+  <tr><td>5. Étape 3 — Sauvegarde (8)</td><td><span class="who m">Mathéo</span></td><td>Lance la cmd <code>docker logs infra-backup</code></td></tr>
+  <tr><td>6. Sécurité / VPN (9)</td><td><span class="who m">Mathéo explique</span> · <span class="who h">Hugo fait la démo</span></td><td>Hugo : clique sur l'app WireGuard ON/OFF + recharge la page</td></tr>
+  <tr><td>7. Bonus LDAP + Samba (10)</td><td><span class="who m">Mathéo</span></td><td>Lance les cmds <code>docker logs infra-ldap</code> / <code>infra-samba</code></td></tr>
+  <tr><td>8. Couverture grille (11)</td><td><span class="who m">Mathéo</span></td><td>Aucune</td></tr>
+  <tr><td>9. Clôture (12)</td><td><span class="who h">Hugo</span> — lit son script</td><td>Aucune</td></tr>
+  <tr><td>Q/R</td><td><span class="who m">Mathéo répond en premier sur la technique</span> · Hugo renvoie</td><td>—</td></tr>
+</table>
+
+<div class="pb"></div>
+
+<!-- ===================== HUGO — INTRO ===================== -->
+
+<h2><span class="who h">Hugo</span> · Bloc 1 — Intro + Contexte (≈ 1 min 30)</h2>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 0:00 — Slide 1 (titre)</div><div class="meta">≈ 30 s</div></div>
+  <div class="show">Slide 1 — page de titre.</div>
+  <div class="say read">
+    Bonjour, on est Hugo et Mathéo, Groupe 3. Notre coéquipier Shakil est absent aujourd'hui,
+    on présente à deux. Notre projet, c'est la conception et le déploiement d'une infrastructure
+    d'entreprise sécurisée, pour le module B1 INFRA. On va vous présenter les trois étapes
+    imposées et le bonus en quinze minutes, et à la fin on prend vos questions.
+  </div>
+  <div class="tip">Respire, regarde le jury, pas l'écran. Tu peux tenir la feuille à la main, c'est ok.</div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 0:30 — Slide 2 (contexte)</div><div class="meta">≈ 1 min</div></div>
+  <div class="show">Slide 2 — contexte et besoin client.</div>
+  <div class="say read">
+    Le contexte, c'est une PME en croissance. Elle a quatre besoins. Premier : segmenter
+    son réseau interne entre les différents services. Deuxième : héberger plusieurs
+    applications web sur un même serveur, en HTTPS, avec des sous-domaines distincts.
+    Troisième : sauvegarder automatiquement les données critiques et pouvoir les restaurer
+    rapidement. Quatrième : permettre à ses collaborateurs de travailler à distance, en
+    sécurité. Et en bonus, on a aussi déployé un partage de fichiers et un annuaire
+    centralisé.
+  </div>
+  <div class="say read">
+    Au total, notre stack tourne sur neuf services conteneurisés et n'expose que trois
+    ports sur Internet. Je passe la main à Mathéo pour vous présenter l'architecture.
+  </div>
+  <div class="tip">À la fin, regarde Mathéo et fais-lui un petit signe pour qu'il enchaîne.</div>
+</div>
+
+<!-- ===================== MATHÉO — ARCHI + ÉTAPE 1 ===================== -->
+
+<h2><span class="who m">Mathéo</span> · Bloc 2 — Architecture &amp; Plan d'adressage (≈ 2 min)</h2>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 1:30 — Slide 3 (schéma)</div><div class="meta">≈ 1 min 15</div></div>
+  <div class="show">Slide 3 — schéma réseau.</div>
+  <div class="say">Voici notre architecture complète. À droite, le collaborateur distant qui passe par le VPN WireGuard sur le port UDP 51820. À gauche, l'entrée HTTPS publique sur les ports 18443 et 18080, qui arrive sur le reverse proxy Caddy. Derrière, trois zones séparées : la DMZ avec le proxy et le routeur, le LAN technique avec WordPress, l'app Node, le DNS, le LDAP et le Samba, et la zone data où vivent la base et la sauvegarde — cette zone est en mode <i>internal</i>, donc sans accès Internet sortant.</div>
+  <div class="tip">Pointe chaque zone avec la souris. Insiste sur le <i>internal</i>.</div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 2:45 — Slide 4 (plan d'adressage)</div><div class="meta">≈ 45 s</div></div>
+  <div class="show">Slide 4 — plan d'adressage.</div>
+  <div class="say">Notre plan d'adressage : DMZ en 172.30.0.0/24, LAN technique en 172.30.10.0/24 — WordPress en .20, Node en .30, DNS en .53, LDAP en .60 et Samba en .70. La zone data en 172.30.20.0/24, et le VPN en 10.13.13.0/24 avec un peer par utilisateur. Trois ports publics : 18080 et 18443 en TCP pour le web, 51820 en UDP pour le VPN.</div>
+</div>
+
+<h2><span class="who m">Mathéo</span> · Bloc 3 — Étape 1 : Réseau &amp; pare-feu (≈ 1 min 30)</h2>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 3:30 — Slide 5 + démo</div><div class="meta">≈ 1 min 30</div></div>
+  <div class="show">Slide 5 — étape 1.</div>
+  <div class="say">Première étape : la segmentation réseau. Les trois zones sont isolées par défaut, un dnsmasq fournit le DNS et le DHCP internes, et un conteneur routeur multi-zones filtre les flux avec nftables. La politique <i>forward</i> est en <i>drop</i> par défaut, on autorise explicitement les flux légitimes. Démo.</div>
+  <div class="do">Terminal : <code>ssh ubuntu@144.91.126.51 'docker logs infra-router-fw'</code></div>
+  <div class="say">On voit trois interfaces, une par zone, le tableau nftables chargé, et les tests de joignabilité OK vers le reverse-proxy et la base.</div>
+</div>
+
+<div class="pb"></div>
+
+<!-- ===================== MATHÉO — ÉTAPE 2 (anciennement Shakil) ===================== -->
+
+<h2><span class="who m">Mathéo</span> · Bloc 4 — Étape 2 : Serveur web multi-apps (≈ 2 min 30)</h2>
+
+<div class="warn">
+  <b>Partie reprise de Shakil.</b> Tu connais le sujet, vas-y normalement. Hugo : tu restes silencieux pendant cette section, tu peux pointer l'écran si besoin.
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 5:00 — Slide 6</div><div class="meta">≈ 1 min</div></div>
+  <div class="show">Slide 6 — étape 2.</div>
+  <div class="say">Deuxième étape : faire tourner plusieurs applications, écrites dans des langages différents, derrière une seule entrée HTTPS. On a un reverse proxy Caddy qui termine le TLS et qui route vers la bonne application selon le sous-domaine demandé, via le SNI. Caddy a un mode <i>tls internal</i> qui génère une CA locale et émet les certificats automatiquement. En prod, on remplacerait par Let's Encrypt sur un vrai domaine.</div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 6:00 — Slide 7 + démo navigateur</div><div class="meta">≈ 1 min 30</div></div>
+  <div class="show">Slide 7 — capture WordPress live.</div>
+  <div class="do">Navigateur : ouvre <code>https://wordpress.entreprise.local:18443</code></div>
+  <div class="say">Voici la première application, WordPress, en PHP. Sur le sous-domaine wordpress.entreprise.local, servie en HTTPS via notre reverse proxy.</div>
+  <div class="do">Clique sur le cadenas → afficher le certificat (CA interne Caddy)</div>
+  <div class="say">Le certificat est bien émis par notre autorité locale.</div>
+  <div class="do">Navigateur : ouvre <code>https://app.entreprise.local:18443</code></div>
+  <div class="say">Et la deuxième application, en Node.js, sur app.entreprise.local. Même serveur, même reverse proxy, deux applications, deux sous-domaines. La base MariaDB que WordPress utilise est en zone data, isolée d'Internet.</div>
+</div>
+
+<!-- ===================== MATHÉO — ÉTAPE 3 ===================== -->
+
+<h2><span class="who m">Mathéo</span> · Bloc 5 — Étape 3 : Sauvegarde automatisée (≈ 1 min 30)</h2>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 7:30 — Slide 8 + démo</div><div class="meta">≈ 1 min 30</div></div>
+  <div class="show">Slide 8 — étape 3.</div>
+  <div class="say">Troisième étape : la sauvegarde automatique. Notre service de backup tourne en cron toutes les trente minutes. Il fait deux choses : un <code>mysqldump</code> de la base WordPress, compressé en gzip, et un <code>tar.gz</code> des fichiers du site. Tout va dans un volume Docker dédié, en zone data isolée. Rétention : les dix dernières sauvegardes par type. La restauration se fait avec <code>restore.sh</code> qui prend le fichier en argument.</div>
+  <div class="do">Terminal : <code>ssh ubuntu@144.91.126.51 'docker logs infra-backup'</code></div>
+  <div class="say">On voit ici les sauvegardes horodatées, environ 19 Ko pour la base, 26 Mo pour les fichiers.</div>
+</div>
+
+<!-- ===================== HUGO + MATHÉO — VPN ===================== -->
+
+<h2><span class="who m">Mathéo</span> explique · <span class="who h">Hugo</span> fait la démo — VPN (≈ 2 min)</h2>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 9:00 — Slide 9 — Mathéo parle</div><div class="meta">≈ 1 min</div></div>
+  <div class="show">Slide 9 — VPN.</div>
+  <div class="say"><b>Mathéo :</b> On a aussi un VPN pour l'accès distant : WireGuard, qui chiffre tout en ChaCha20-Poly1305. Chaque utilisateur a sa paire de clés plus une clé pré-partagée propre — c'est notre authentification forte. Seul le port 51820 en UDP est exposé. Et pour démontrer que ça serve à quelque chose, on a mis une ressource interne, joignable uniquement par le tunnel. Hugo va vous montrer.</div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 10:00 — Démo Hugo</div><div class="meta">≈ 1 min</div></div>
+  <div class="warn">
+    <b>Hugo, c'est ton tour.</b> Tu n'as <b>rien à expliquer techniquement</b>. Tu fais juste des clics et tu lis ces 3 phrases dans l'ordre.
+  </div>
+  <div class="do"><b>1.</b> Ouvre l'app WireGuard. <b>Désactive</b> le tunnel.</div>
+  <div class="do"><b>2.</b> Dans le navigateur, va sur <code>http://10.13.13.1</code> — attends que ça donne « impossible d'accéder à ce site »</div>
+  <div class="say read">Tunnel coupé, la ressource interne est inaccessible — c'est normal, son adresse IP n'existe pas sur Internet.</div>
+  <div class="do"><b>3.</b> Dans WireGuard, <b>réactive</b> le tunnel.</div>
+  <div class="do"><b>4.</b> Recharge la page <code>http://10.13.13.1</code> → la page <i>whoami</i> apparaît.</div>
+  <div class="say read">Maintenant le VPN est monté, et la même URL répond. La ressource est accessible uniquement à travers le tunnel — c'est exactement le scénario télétravail.</div>
+  <div class="tip">Si la page ne charge pas tout de suite, dis : « Ça prend une seconde, le temps que le tunnel se monte »… puis rafraîchis. Si vraiment ça plante (rare), passe à : « la démo est dans nos captures, vous les avez dans le rendu ».</div>
+</div>
+
+<div class="pb"></div>
+
+<!-- ===================== MATHÉO — BONUS + GRILLE ===================== -->
+
+<h2><span class="who m">Mathéo</span> · Bonus + Couverture grille (≈ 2 min 30)</h2>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 11:00 — Slide 10 + démo</div><div class="meta">≈ 1 min 30</div></div>
+  <div class="show">Slide 10 — bonus LDAP + Samba.</div>
+  <div class="say">Bonus : annuaire et partage de fichiers. Un OpenLDAP avec la base <code>dc=entreprise,dc=local</code>, deux unités d'organisation, et nos trois comptes provisionnés automatiquement via un fichier LDIF au boot. Un Samba avec deux partages, <i>partage-entreprise</i> et <i>technique</i>, non exposés sur Internet — accès interne ou via VPN.</div>
+  <div class="do">Terminal : <code>ssh ubuntu@144.91.126.51 'docker logs infra-ldap 2>&amp;1 | grep -iE "ldif|bootstrap"'</code></div>
+  <div class="do">Terminal : <code>ssh ubuntu@144.91.126.51 'docker logs infra-samba'</code></div>
+  <div class="say">Logs LDAP : import du LDIF custom au boot. Logs Samba : nos trois comptes ajoutés, service prêt.</div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 12:30 — Slide 11 — Couverture grille</div><div class="meta">≈ 1 min</div></div>
+  <div class="show">Slide 11 — grille.</div>
+  <div class="say">Pour conclure sur la grille, on couvre les six compétences. Réseau simple : trois sous-réseaux, plan d'adressage, DNS, DHCP, routage. Client-serveur : reverse proxy plus deux apps plus la base. Admin système : Docker, services persistants, scripts Bash. Virtualisation : stack Docker Compose reproductible. Sécurisation : nftables, TLS, VPN, exposition minimale, zone data isolée. Documentation : tout est sur GitHub.</div>
+</div>
+
+<!-- ===================== HUGO — CLÔTURE ===================== -->
+
+<h2><span class="who h">Hugo</span> · Bloc 9 — Clôture (≈ 30 s)</h2>
+
+<div class="step">
+  <div class="head"><div class="t">⌚ 13:30 — Slide 12 (merci)</div><div class="meta">≈ 30 s</div></div>
+  <div class="show">Slide 12 — merci.</div>
+  <div class="say read">
+    Voilà pour la présentation. Pour résumer : trois étapes obligatoires couvertes, plus le
+    bonus, neuf conteneurs en production, tout redéployable en une commande avec
+    <i>docker compose up</i>, et tout est sur notre dépôt GitHub public. Merci pour votre
+    attention, on est preneurs de vos questions.
+  </div>
+  <div class="tip">Pause. Regarde le jury. Attends la première question.</div>
+</div>
+
+<div class="pb"></div>
+
+<!-- ===================== HUGO — KIT DE SURVIE Q/R ===================== -->
+
+<h1 style="color:#0f3460">🆘 Kit de survie Q/R — pour Hugo</h1>
+<div class="sub">À mémoriser ou à avoir sous les yeux pendant les Q/R</div>
+
+<div class="warn">
+  <b>Règle d'or.</b> Si on te pose une question technique, <b>tu ne devines pas</b>. Tu utilises
+  une des phrases d'évasion ci-dessous pour passer la main à Mathéo, calmement et sans paniquer.
+  Le jury préfère un « je laisse Mathéo répondre, c'est lui qui a fait cette partie » à une
+  approximation hasardeuse.
+</div>
+
+<h2>5 phrases d'évasion à apprendre par cœur</h2>
+
+<div class="escape">« C'est Mathéo qui a porté cette partie, je le laisse compléter. »</div>
+<div class="escape">« Bonne question — Mathéo, tu veux préciser ? »</div>
+<div class="escape">« On en a discuté, mais c'est Mathéo qui a fait l'implémentation, il pourra mieux détailler. »</div>
+<div class="escape">« Côté technique, je préfère laisser Mathéo répondre pour ne pas dire d'imprécision. »</div>
+<div class="escape">« Effectivement, c'est un point qu'on a creusé avec Mathéo — il va vous expliquer. »</div>
+
+<h2>Si on te pose UNE des 6 questions ci-dessous, tu PEUX répondre toi-même</h2>
+
+<div class="step">
+  <div class="head"><div class="t">❓ « Comment vous êtes-vous répartis le travail ? »</div></div>
+  <div class="say read">
+    À l'origine, Hugo sur l'architecture et le VPN, Shakil sur le serveur web,
+    Mathéo sur la sauvegarde et le bonus. Aujourd'hui Mathéo absorbe la partie web vu
+    l'absence de Shakil.
+  </div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">❓ « C'est quoi votre dépôt ? »</div></div>
+  <div class="say read">
+    Tout est sur GitHub, dépôt public : <code>H129hj/infra-entreprise-b1</code>. Vous y trouverez
+    le code, la doc technique, le schéma, les captures de preuves, et même les scripts
+    de génération du diaporama.
+  </div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">❓ « Et si le VPS tombe ? »</div></div>
+  <div class="say read">
+    Tout est dans Git et tout est en Docker. Donc <code>git clone</code> plus
+    <code>docker compose up -d</code> sur n'importe quel hôte avec Docker, et la stack
+    redémarre en quelques minutes. Les sauvegardes peuvent être restaurées dessus.
+  </div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">❓ « Pourquoi pas pfSense / Packet Tracer ? »</div></div>
+  <div class="say read">
+    La grille accepte explicitement Docker comme outil de maquette. On a choisi Docker
+    pour la reproductibilité et le versionnement. Pour de vrais VLAN de niveau 2 on aurait
+    pris pfSense ou Packet Tracer, mais ici la segmentation logique nous suffisait.
+  </div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">❓ « Qu'est-ce que vous feriez avec plus de temps ? »</div></div>
+  <div class="say read">
+    Cinq pistes : l'intégration Samba vers LDAP avec <i>ldapsam</i>, un vrai domaine avec
+    Let's Encrypt, du monitoring Prometheus-Grafana, du load balancing actif côté Caddy,
+    et du chiffrement au repos pour les sauvegardes avec <i>restic</i>.
+  </div>
+</div>
+
+<div class="step">
+  <div class="head"><div class="t">❓ « Le port 18443 au lieu de 443, pourquoi ? »</div></div>
+  <div class="say read">
+    Pour ne pas entrer en conflit avec les autres services qui tournent déjà sur ce VPS.
+    Sur une infra dédiée, on prendrait 443 directement.
+  </div>
+</div>
+
+<h2>Cheat-sheet technique minimal — pour ne pas être pris au dépourvu</h2>
+
+<table>
+  <tr><th>Si on dit…</th><th>Tu retiens juste ça</th></tr>
+  <tr><td>VLAN</td><td>= « réseau local virtuel ». Nous on a fait la même chose avec Docker.</td></tr>
+  <tr><td>Reverse proxy</td><td>= un serveur qui reçoit les requêtes et les transmet à la bonne app. Le nôtre c'est Caddy.</td></tr>
+  <tr><td>TLS / HTTPS</td><td>= le chiffrement du web. Caddy le fait automatiquement avec sa CA interne.</td></tr>
+  <tr><td>SNI</td><td>= le navigateur dit au serveur quel site il veut, dès le début du TLS. Permet plusieurs sites HTTPS sur la même IP.</td></tr>
+  <tr><td>WireGuard</td><td>= notre VPN. Très simple, très rapide, chiffrement moderne.</td></tr>
+  <tr><td>nftables</td><td>= le pare-feu Linux moderne. Remplace iptables.</td></tr>
+  <tr><td>LDAP</td><td>= annuaire pour centraliser les comptes utilisateurs.</td></tr>
+  <tr><td>Samba</td><td>= partage de fichiers façon Windows. Protocole SMB.</td></tr>
+  <tr><td>cron</td><td>= planificateur de tâches Linux. Le nôtre tourne toutes les 30 min.</td></tr>
+  <tr><td>mysqldump</td><td>= outil qui exporte une base MySQL/MariaDB dans un fichier texte.</td></tr>
+  <tr><td>Docker</td><td>= moteur de conteneurs. On y met chaque service isolé.</td></tr>
+  <tr><td>Docker Compose</td><td>= fichier YAML qui décrit toute la stack, on lance tout d'un coup.</td></tr>
+</table>
+
+<h2>Phrases-béquilles utiles</h2>
+
+<ul class="compact">
+  <li>« On a privilégié la <b>simplicité de déploiement</b>. »</li>
+  <li>« On a choisi cette option pour <b>limiter la surface d'attaque</b>. »</li>
+  <li>« <b>En production</b>, on irait plus loin avec [Mathéo complète]. »</li>
+  <li>« C'est un point qu'on a <b>documenté dans le dépôt</b>. »</li>
+  <li>« Le brief demandait X, on a livré Y, qui répond à ce besoin. »</li>
+</ul>
+
+<div class="warn">
+  <b>Avant d'entrer en salle.</b> Vérifie que :
+  <ul>
+    <li>Le VPN est <b>activé</b> sur ton poste (handshake OK).</li>
+    <li>Le navigateur a 3 onglets ouverts : <code>wordpress.entreprise.local:18443</code>, <code>app.entreprise.local:18443</code>, <code>http://10.13.13.1</code>.</li>
+    <li>Un terminal est ouvert (pour les <code>ssh ... docker logs</code> de Mathéo).</li>
+    <li>L'app WireGuard est <b>visible</b> dans la barre des tâches pour la démo on/off.</li>
+    <li>Ce script imprimé ou ouvert sur ton téléphone à côté de toi.</li>
+  </ul>
+</div>
+
+<p style="margin-top: 22px; color:#5a6479; font-size: 9.5pt">
+Plan B oral — B1 INFRA Groupe 3 · à jeter après l'oral 😉
+</p>
+
+</body></html>
